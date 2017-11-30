@@ -14,7 +14,6 @@ $(document).ready(function() {
 			question: "Random Question 1",
 			choices:  ["The Right Answer", "The Wrong Answer", "The Super Wrong Answer", "Don't Even Click This"],
 			correctAnswer: "The Right Answer"
-
 		},{
 			question: "Random Question 2",
 			choices:  ["The Right Answer", "The Wrong Answer", "The Super Wrong Answer", "Don't Even Click This"],
@@ -34,17 +33,55 @@ $(document).ready(function() {
 
 	}];
 
-	
+	// Countdown Timer
+
+	var countdownTimer = {
+		time: 30,
+
+		reset: function () {
+			this.time = 30;
+			$(".timer").html(this.time + " seconds remaining");
+		},
+
+		start: function() {
+			counter = setInterval(countdownTimer.count, 1000);
+		},
+
+		stop: function() {
+			clearInterval(counter);
+		},
+
+		count: function(){
+			countdownTimer.time--;
+			console.log(countdownTimer.time);
+			if (countdownTimer.time >= 0) {
+				$(".timer").html(countdownTimer.time + " seconds remaining");
+			}
+			else {
+				alert("Times up!")
+				countdownTimer.reset();
+			}
+
+		}
+	}
 
 
 
-
+	// Start Function
 	function start() {
 		$("#startButton").on("click", function(){
 			$(this).hide();
 			var randQ = questions[Math.floor(Math.random()* questions.length)];
-			$(".question").text(randQ);
-			console.log(randQ);
+			$(".question").text(randQ.question);
+			$("#buttonA").text(randQ.choices[0]).show();
+			$("#buttonB").text(randQ.choices[1]).show();
+			$("#buttonC").text(randQ.choices[2]).show();
+			$("#buttonD").text(randQ.choices[3]).show();
+			countdownTimer.start();
+
+			
+
+
 	});
 };
 
