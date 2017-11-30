@@ -1,13 +1,18 @@
 $(document).ready(function() {
-	// Setup function
-	function setup(){
-		$(".question").html("<button id='startButton'>Start</button>");
-		$("#buttonA").hide();
-		$("#buttonB").hide();
-		$("#buttonC").hide();
-		$("#buttonD").hide();
-	};
-	// Display Fields
+
+	// Index for keeping track of total questions
+	var index = 0;
+	var correct = 0;
+	var incorrect = 0;
+
+	// Variable Array for holding answered questions
+
+	var answeredQuestions = [];
+	var currentQuestion = [];
+	var currentCorrectAnswer = [];
+
+	// Question Arrays to be Displayed
+
 
 	var questions = [{
 
@@ -63,25 +68,41 @@ $(document).ready(function() {
 
 		}
 	}
-
-	var randQ = questions[Math.floor(Math.random()* questions.length)];
-
-	// Start Function
-	function start() {
+	
+	// Loads Question Function
+	function loadQuestion(index) {
 		$("#startButton").on("click", function(){
-			$(this).hide();
+		var randQ = questions[Math.floor(Math.random()* questions.length)];
 			$(".question").text(randQ.question);
 			$("#buttonA").text(randQ.choices[0]).show();
 			$("#buttonB").text(randQ.choices[1]).show();
 			$("#buttonC").text(randQ.choices[2]).show();
 			$("#buttonD").text(randQ.choices[3]).show();
 			countdownTimer.start();
-
-			
-
-
+			currentQuestion.push(randQ.question);
+			currentCorrectAnswer.push(randQ.correctAnswer);
+			console.log(currentQuestion);
+			console.log(currentCorrectAnswer);
 	});
 };
+
+
+	// Setup function
+	function setup(){
+		index = 0;
+		$(".question").html("<button id='startButton'>Start</button>");
+		$("#buttonA").hide();
+		$("#buttonB").hide();
+		$("#buttonC").hide();
+		$("#buttonD").hide();
+		function start(){
+			$("#startButton").on("click", function(){
+				$(this).hide();
+			})
+		};
+		loadQuestion(index);
+
+	};
 
 	// Click Function
 		$(".answerChoice").on("click", function(){
@@ -98,37 +119,48 @@ $(document).ready(function() {
 					answerChosen = "D";
 					console.log(answerChosen);
 			}
-				if ((answerChosen === "A") && answerChosen === randQ.correctAnswer){
-					alert("Correct!");
-				} else if (answerChosen === "A"){
-					alert("Wrong!")
-				}
-				if ((answerChosen === "B") && answerChosen === randQ.correctAnswer){
-					alert("Correct!");
-				} else if (answerChosen === "B"){
-					alert("Wrong!");
-				}
-				if ((answerChosen === "C") && answerChosen === randQ.correctAnswer){
-					alert("Correct!");
-				} else if (answerChosen === "C"){
-					alert("Wrong!")
-				}
-				if ((answerChosen === "D") && answerChosen === randQ.correctAnswer){
-					alert("Correct!");
-				} else if(answerChosen === "D"){
-					alert("Wrong!");
+				function checkAnswer(){
+					if ((answerChosen === currentCorrectAnswer[0])){
+						alert("Correct!");
+						correct++;
+					}else{
+						alert("Incorrect!");
+						incorrect++;
+					}
 				}
 
+
+				// if ((answerChosen === "A") && answerChosen === randQ.correctAnswer){
+				// 	alert("Correct!");
+				// } else if (answerChosen === "A"){
+				// 	alert("Wrong!")
+				// }
+				// if ((answerChosen === "B") && answerChosen === randQ.correctAnswer){
+				// 	alert("Correct!");
+				// } else if (answerChosen === "B"){
+				// 	alert("Wrong!");
+				// }
+				// if ((answerChosen === "C") && answerChosen === randQ.correctAnswer){
+				// 	alert("Correct!");
+				// } else if (answerChosen === "C"){
+				// 	alert("Wrong!")
+				// }
+				// if ((answerChosen === "D") && answerChosen === randQ.correctAnswer){
+				// 	alert("Correct!");
+				// } else if(answerChosen === "D"){
+				// 	alert("Wrong!");
+				// }
+checkAnswer();
 	});
 
 
 
 setup();
 
-start();
+
+
 
 });
-
 
 
 
