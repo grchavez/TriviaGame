@@ -13,23 +13,23 @@ $(document).ready(function() {
 
 			question: "Random Question 1",
 			choices:  ["The Right Answer", "The Wrong Answer", "The Super Wrong Answer", "Don't Even Click This"],
-			correctAnswer: "The Right Answer"
+			correctAnswer: "A"
 		},{
 			question: "Random Question 2",
 			choices:  ["The Right Answer", "The Wrong Answer", "The Super Wrong Answer", "Don't Even Click This"],
-			correctAnswer: "The Right Answer"
+			correctAnswer: "A"
 		},{
 			question: "Random Question 3",
 			choices:  ["The Right Answer", "The Wrong Answer", "The Super Wrong Answer", "Don't Even Click This"],
-			correctAnswer: "The Right Answer"
+			correctAnswer: "A"
 		},{
 			question: "Random Question 4",
 			choices:  ["The Right Answer", "The Wrong Answer", "The Super Wrong Answer", "Don't Even Click This"],
-			correctAnswer: "The Right Answer"
+			correctAnswer: "A"
 		},{
 			question: "Random Question 5",
 			choices:  ["The Right Answer", "The Wrong Answer", "The Super Wrong Answer", "Don't Even Click This"],
-			correctAnswer: "The Right Answer"
+			correctAnswer: "A"
 
 	}];
 
@@ -53,7 +53,6 @@ $(document).ready(function() {
 
 		count: function(){
 			countdownTimer.time--;
-			console.log(countdownTimer.time);
 			if (countdownTimer.time >= 0) {
 				$(".timer").html(countdownTimer.time + " seconds remaining");
 			}
@@ -65,13 +64,12 @@ $(document).ready(function() {
 		}
 	}
 
-
+	var randQ = questions[Math.floor(Math.random()* questions.length)];
 
 	// Start Function
 	function start() {
 		$("#startButton").on("click", function(){
 			$(this).hide();
-			var randQ = questions[Math.floor(Math.random()* questions.length)];
 			$(".question").text(randQ.question);
 			$("#buttonA").text(randQ.choices[0]).show();
 			$("#buttonB").text(randQ.choices[1]).show();
@@ -84,6 +82,46 @@ $(document).ready(function() {
 
 	});
 };
+
+	// Click Function
+		$(".answerChoice").on("click", function(){
+			if(this.id === "buttonA"){
+				var answerChosen = "A";
+				console.log(answerChosen);
+			} else if(this.id === "buttonB"){
+					answerChosen = "B";
+					console.log(answerChosen);
+			} else if(this.id === "buttonC"){
+					answerChosen = "C";
+					console.log(answerChosen);
+			} else if(this.id === "buttonD"){
+					answerChosen = "D";
+					console.log(answerChosen);
+			}
+				if ((answerChosen === "A") && answerChosen === randQ.correctAnswer){
+					alert("Correct!");
+				} else if (answerChosen === "A"){
+					alert("Wrong!")
+				}
+				if ((answerChosen === "B") && answerChosen === randQ.correctAnswer){
+					alert("Correct!");
+				} else if (answerChosen === "B"){
+					alert("Wrong!");
+				}
+				if ((answerChosen === "C") && answerChosen === randQ.correctAnswer){
+					alert("Correct!");
+				} else if (answerChosen === "C"){
+					alert("Wrong!")
+				}
+				if ((answerChosen === "D") && answerChosen === randQ.correctAnswer){
+					alert("Correct!");
+				} else if(answerChosen === "D"){
+					alert("Wrong!");
+				}
+
+	});
+
+
 
 setup();
 
