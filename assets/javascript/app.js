@@ -7,7 +7,6 @@ $(document).ready(function() {
 
 	// Variable Array for holding answered questions
 
-	var answeredQuestions = [];
 	var currentQuestion = [];
 	var currentCorrectAnswer = [];
 
@@ -68,11 +67,27 @@ $(document).ready(function() {
 
 		}
 	}
+
+	// Next Question
+
+	var nextQuestion = function(){
+		countdownTimer.reset();
+		var nextQ = questions[Math.floor(Math.random()* questions.length)];
+		$(".question").text(nextQ.question);
+		$("#buttonA").text(nextQ.choices[0]).show();
+		$("#buttonB").text(nextQ.choices[1]).show();
+		$("#buttonC").text(nextQ.choices[2]).show();
+		$("#buttonD").text(nextQ.choices[3]).show();
+		questions.pop(currentQuestion);
+		console.log(questions);
+
+
+	};
 	
-	// Loads Question Function
+	// Loads First Question Function, pushes into a specific array, and removes from parent array.
 	function loadQuestion(index) {
 		$("#startButton").on("click", function(){
-		var randQ = questions[Math.floor(Math.random()* questions.length)];
+			var randQ = questions[Math.floor(Math.random()* questions.length)];
 			$(".question").text(randQ.question);
 			$("#buttonA").text(randQ.choices[0]).show();
 			$("#buttonB").text(randQ.choices[1]).show();
@@ -81,8 +96,8 @@ $(document).ready(function() {
 			countdownTimer.start();
 			currentQuestion.push(randQ.question);
 			currentCorrectAnswer.push(randQ.correctAnswer);
-			console.log(currentQuestion);
-			console.log(currentCorrectAnswer);
+			questions.pop(currentQuestion);
+			console.log(questions);
 	});
 };
 
@@ -100,9 +115,23 @@ $(document).ready(function() {
 				$(this).hide();
 			})
 		};
-		loadQuestion(index);
+		loadQuestion();
 
 	};
+
+	// Correct Function 
+
+	function answerCorrect(){
+		correct++;
+		alert("Correct!");
+		nextQuestion();
+	}
+	// Incorrect Function
+	function answerIncorrect(){
+		incorrect++;
+		alert("Incorrect!");
+		nextQuestion();
+	}
 
 	// Click Function
 		$(".answerChoice").on("click", function(){
@@ -121,11 +150,9 @@ $(document).ready(function() {
 			}
 				function checkAnswer(){
 					if ((answerChosen === currentCorrectAnswer[0])){
-						alert("Correct!");
-						correct++;
+						answerCorrect();
 					}else{
-						alert("Incorrect!");
-						incorrect++;
+						answerIncorrect();
 					}
 				}
 
@@ -151,6 +178,7 @@ $(document).ready(function() {
 				// 	alert("Wrong!");
 				// }
 checkAnswer();
+
 	});
 
 
